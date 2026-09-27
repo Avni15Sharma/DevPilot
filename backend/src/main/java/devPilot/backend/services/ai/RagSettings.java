@@ -1,7 +1,7 @@
 package devPilot.backend.services.ai;
 
 public final class RagSettings {
-    /** How many code chunks to fetch from the vector database per question. */
+     /** How many code chunks to fetch from the vector database per question. */
     public static final int TOP_K_CHUNKS = 8;
 
     /** Max time (ms) to keep an SSE stream open while the model is responding. */

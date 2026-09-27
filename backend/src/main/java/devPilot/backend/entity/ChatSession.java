@@ -17,35 +17,26 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Entity
+@Table(name = "chat_sessions")
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "users")
 @Builder
-public class User {
+public class ChatSession {
 
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
 
-    @Column(name = "github_id", unique = true, nullable = false)
-    private Long githubId;
+    @Column(name = "user_id", nullable = false)
+    private UUID userId;
 
-    @Column(name = "github_username", nullable = false, length = 100)
-    private String githubUsername;
+    @Column(name = "repository_id", nullable = false)
+    private UUID repositoryId;
 
-    @Column(name = "display_name", nullable = false, length = 200)
-    private String displayName;
-
-    @Column(name = "avatar_url", length = 500)
-    private String avatarUrl;
-
-    @Column(name = "access_token", nullable = false, columnDefinition = "TEXT")
-    private String accessToken;
-
-    @Column(name = "token_scopes", length = 500)
-    private String tokenScopes;
+    @Column(nullable = false, length = 200)
+    private String title;
 
     @Column(name = "created_at", nullable = false, updatable = false)
     private Instant createdAt;
@@ -54,6 +45,9 @@ public class User {
     void onCreate() {
         if (createdAt == null) {
             createdAt = Instant.now();
+        }
+        if (title == null || title.isBlank()) {
+            title = "New chat";
         }
     }
 }

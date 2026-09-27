@@ -26,7 +26,7 @@ public class GithubApiClient {
 
     private final RestClient.Builder restClientBuilder;
 
-    public List<Map<String, Object>> listUserRepos(String accessToken) {
+     public List<Map<String, Object>> listUserRepos(String accessToken) {
         List<Map<String, Object>> all = new ArrayList<>();
         int page = 1;
         while (page <= 10) {
@@ -54,7 +54,7 @@ public class GithubApiClient {
         return all;
     }
 
-    public Map<String, Object> getRepoTree(String accessToken, String owner, String repo, String branch) {
+      public Map<String, Object> getRepoTree(String accessToken, String owner, String repo, String branch) {
         return client(accessToken)
                 .get()
                 .uri("/repos/{owner}/{repo}/git/trees/{branch}?recursive=1", owner, repo, branch)
@@ -62,7 +62,7 @@ public class GithubApiClient {
                 .body(MAP);
     }
 
-    public String getFileContent(String accessToken, String owner, String repo, String path) {
+       public String getFileContent(String accessToken, String owner, String repo, String path) {
         Map<String, Object> body = client(accessToken)
                 .get()
                 .uri("/repos/{owner}/{repo}/contents/{path}", owner, repo, path)
@@ -82,9 +82,9 @@ public class GithubApiClient {
         }
         return String.valueOf(content);
     }
-
+    
     private RestClient client(String accessToken){
-        return restClientBuilder
+          return restClientBuilder
                 .baseUrl(API_BASE)
                 .defaultHeader(HttpHeaders.AUTHORIZATION, "Bearer " + accessToken)
                 .defaultHeader(HttpHeaders.ACCEPT, "application/vnd.github+json")

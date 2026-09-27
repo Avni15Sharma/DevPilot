@@ -37,7 +37,6 @@ public class AuthController {
                 user.getGithubUsername(),
                 user.getDisplayName(),
                 user.getAvatarUrl()));
-
     }
-
+    
 }

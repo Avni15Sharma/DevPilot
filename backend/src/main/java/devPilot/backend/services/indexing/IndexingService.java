@@ -62,7 +62,7 @@ public class IndexingService {
     }
 
     @Async("indexingExecutor")
-    public void indexAsync(UUID repoId, UUID userId) {
+     public void indexAsync(UUID repoId, UUID userId) {
         try {
             doIndex(repoId, userId);
         } catch (Exception ex) {
@@ -72,7 +72,7 @@ public class IndexingService {
     }
 
 
-    private void doIndex(UUID repoId, UUID userId) {
+      private void doIndex(UUID repoId, UUID userId) {
         Repository repo = repositoryRepository.findById(repoId)
                 .orElseThrow(() -> new NotFoundException("Repository not found"));
         String token = userService.decryptAccessToken(userService.requiredById(userId));
@@ -119,7 +119,7 @@ public class IndexingService {
     }
 
 
-    @SuppressWarnings("unchecked")
+       @SuppressWarnings("unchecked")
     private List<String> listIndexableFiles(Map<String, Object> tree) {
         if (tree == null || tree.get("tree") == null) {
             return List.of();
@@ -137,7 +137,7 @@ public class IndexingService {
                 .toList();
     }
 
-    private void deleteExistingVectors(String repoId) {
+     private void deleteExistingVectors(String repoId) {
         try {
             var filter = new FilterExpressionBuilder().eq(RagSettings.METADATA_REPO_ID, repoId).build();
             vectorStore.delete(filter);
@@ -146,7 +146,7 @@ public class IndexingService {
         }
     };
 
-    @Transactional
+      @Transactional
     protected void updateProgress(
             UUID repoId,
             int total,
@@ -165,7 +165,7 @@ public class IndexingService {
         });
     }
 
-    @Transactional
+      @Transactional
     protected void markReady(UUID repoId, int totalFiles, int processedFiles, int totalChunks, String fullName) {
         repositoryRepository.findById(repoId).ifPresent(repo -> {
             repo.setIndexStatus(IndexStatus.READY);
@@ -180,7 +180,7 @@ public class IndexingService {
         log.info("Indexed {} files ({} chunks) for {}", processedFiles, totalChunks, fullName);
     }
 
-    @Transactional
+     @Transactional
     protected void markFailed(UUID repoId, String message) {
         repositoryRepository.findById(repoId).ifPresent(repo -> {
             repo.setIndexStatus(IndexStatus.FAILED);

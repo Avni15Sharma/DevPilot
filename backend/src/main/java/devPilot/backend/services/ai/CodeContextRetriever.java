@@ -17,9 +17,9 @@ public class CodeContextRetriever {
     private static final String NO_MATCHES = "(no matching code chunks found)";
 
     private final VectorStore vectorStore;
-    private final CitationMapper citationMapper;
+    private final CitationMapper citationMapper; 
 
-    public RetrievedContext retrieve(UUID repositoryId, String question) {
+     public RetrievedContext retrieve(UUID repositoryId, String question) {
         var filter = new FilterExpressionBuilder()
                 .eq(RagSettings.METADATA_REPO_ID, repositoryId.toString())
                 .build();

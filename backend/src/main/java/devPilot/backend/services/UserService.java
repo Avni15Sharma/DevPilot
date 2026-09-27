@@ -17,8 +17,8 @@ import lombok.RequiredArgsConstructor;
 public class UserService {
     public final UserRepository userRepository;
     public final TextEncryptor tokenEncryptor;
-
-    @Transactional
+    
+   @Transactional
     public User upsertFromGitHub(Map<String, Object> attributes, String accessToken, String scopes) {
         Long githubId = toLong(attributes.get("id"));
         String login = String.valueOf(attributes.get("login"));
@@ -56,6 +56,6 @@ public class UserService {
         return Long.parseLong(String.valueOf(value));
     }
 
-
+   
 
 }

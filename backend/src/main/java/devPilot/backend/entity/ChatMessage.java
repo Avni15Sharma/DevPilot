@@ -5,6 +5,8 @@ import java.util.UUID;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -17,35 +19,30 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Entity
+@Table(name = "chat_messages")
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "users")
 @Builder
-public class User {
+public class ChatMessage {
 
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
 
-    @Column(name = "github_id", unique = true, nullable = false)
-    private Long githubId;
+    @Column(name = "session_id", nullable = false)
+    private UUID sessionId;
 
-    @Column(name = "github_username", nullable = false, length = 100)
-    private String githubUsername;
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false, length = 20)
+    private MessageRole role;
 
-    @Column(name = "display_name", nullable = false, length = 200)
-    private String displayName;
+    @Column(nullable = false, columnDefinition = "TEXT")
+    private String content;
 
-    @Column(name = "avatar_url", length = 500)
-    private String avatarUrl;
-
-    @Column(name = "access_token", nullable = false, columnDefinition = "TEXT")
-    private String accessToken;
-
-    @Column(name = "token_scopes", length = 500)
-    private String tokenScopes;
+    @Column(columnDefinition = "TEXT")
+    private String citations;
 
     @Column(name = "created_at", nullable = false, updatable = false)
     private Instant createdAt;

@@ -34,7 +34,7 @@ public class RepoService {
 
         List<Repository> saved = new ArrayList<>();
 
-        for (Map<String, Object> remote : remoteRepos) {
+          for (Map<String, Object> remote : remoteRepos) {
             Long githubRepoId = toLong(remote.get("id"));
             Repository repo = repositoryRepository
                     .findByUserIdAndGithubRepoId(userId, githubRepoId)
@@ -64,28 +64,28 @@ public class RepoService {
             }
             saved.add(repositoryRepository.save(repo));
         }
-
-        return saved.stream()
+    
+         return saved.stream()
                 .sorted((a, b) -> a.getFullName().compareToIgnoreCase(b.getFullName()))
                 .map(this::toResponse)
                 .toList();
     }
 
-
+    
     @Transactional(readOnly = true)
     public List<RepositoryResponse> listStored(UUID userId) {
         return repositoryRepository.findByUserIdOrderByFullNameAsc(userId).stream()
                 .map(this::toResponse)
                 .toList();
     }
-
+    
     @Transactional(readOnly = true)
     public Repository requireOwned(UUID repoId, UUID userId) {
         return repositoryRepository.findByIdAndUserId(repoId, userId)
                 .orElseThrow(() -> new NotFoundException("Repository not found"));
     }
 
-
+    
     @Transactional(readOnly = true)
     public IndexStatusResponse status(UUID repoId, UUID userId) {
         Repository repo = requireOwned(repoId, userId);
@@ -99,7 +99,7 @@ public class RepoService {
                 repo.getErrorMessage());
     }
 
-    public RepositoryResponse toResponse(Repository repo) {
+     public RepositoryResponse toResponse(Repository repo) {
         return new RepositoryResponse(
                 repo.getId(),
                 repo.getGithubRepoId(),

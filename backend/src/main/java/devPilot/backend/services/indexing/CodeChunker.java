@@ -14,10 +14,10 @@ import devPilot.backend.services.ai.RagSettings;
 
 @Component
 public class CodeChunker {
-    private final TokenTextSplitter splitter;
+       private final TokenTextSplitter splitter;
     private final CodeFileFilter fileFilter;
 
-
+  
     public CodeChunker(
             @Value("${app.indexing.chunk-size:800}") int chunkSize,
             CodeFileFilter fileFilter) {
@@ -30,7 +30,7 @@ public class CodeChunker {
         this.fileFilter = fileFilter;
     }
 
-    public List<Document> chunkFile(String repoId, String filePath, String content) {
+      public List<Document> chunkFile(String repoId, String filePath, String content) {
         if (content == null || content.isBlank()) {
             return List.of();
         }
@@ -46,7 +46,7 @@ public class CodeChunker {
                 .toList();
     }
 
-    private static Map<String, Object> baseMetadata(String repoId, String filePath, String language) {
+      private static Map<String, Object> baseMetadata(String repoId, String filePath, String language) {
         Map<String, Object> metadata = new HashMap<>();
         metadata.put(RagSettings.METADATA_REPO_ID, repoId);
         metadata.put("filePath", filePath);
@@ -54,7 +54,7 @@ public class CodeChunker {
         return metadata;
     }
 
-    private static Document withChunkIndex(
+     private static Document withChunkIndex(
             Document chunk,
             String repoId,
             String filePath,
@@ -65,6 +65,6 @@ public class CodeChunker {
         metadata.put("filePath", filePath);
         metadata.put("language", language);
         metadata.put("chunkIndex", chunkIndex);
-        return new Document(chunk.getText(), metadata);
-    }
+         return new Document(chunk.getText(), metadata);
+            }
 }
